@@ -113,22 +113,31 @@ h2 {
 
 /* Title */
 .lead-form legend {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between text and lines */
   position: relative;
 }
 
+.lead-form legend::before,
 .lead-form legend::after {
   content: "";
-  display: block;
-  width: 50px;
-  height: 3px;
-  background: #007bff;
-  margin: 8px auto 0;
-  border-radius: 2px;
+  flex: 1;
+  height: 2px;
+  background: #ddd;
 }
+.lead-form legend::after {
+  margin-left: 10px; /* Space between text and right line */
+}
+
+.lead-form legend::before {
+  margin-right: 10px; /* Space between text and left line */
+}
+
 
 /* Input Fields */
 .lead-form input {
