@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400;700&family=Lato:wght@300;400;700&display=swap');
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -23,11 +24,14 @@ a:hover {
 }
 
 body {
-  margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: "Poppins", "Roboto", "Lato", sans-serif; /* Priority Order */
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
@@ -68,65 +72,208 @@ button:focus-visible {
 }
 
 /* For the table form */
+/* Importing Google Fonts */
+
+
 .container {
-  max-width: 600px;
+  max-width: 800px;
   margin: auto;
   text-align: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Poppins", sans-serif; /* Consistent font */
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 20px;
-  font-family: "Arial", sans-serif;
+  font-weight: 600;
+  color: #333;
 }
 
-form {
+h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #444;
+}
+
+/* For the Input field where we fill the details*/
+/* Form Container */
+/* Form Container */
+.lead-form {
+  width: 100%;
+  max-width: 450px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 18px; /* Even spacing */
+  text-align: center;
 }
 
-input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-family: "Arial", sans-serif;
+/* Title */
+.lead-form legend {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
 }
 
-button {
+/* Input Fields */
+.lead-form input {
+  padding: 14px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  background: #f9f9f9;
+  box-sizing: border-box; /* Maintains structure */
+  text-align: left; 
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.lead-form input:focus {
+  border-color: #007bff;
+  background: #ffffff;
+  box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+}
+
+/* Submit Button */
+.lead-form button {
+  padding: 14px;
+  background: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+}
+
+.lead-form button:hover {
+  background: #0056b3;
+  transform: scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .lead-form {
+    width: 95%;
+    padding: 24px;
+  }
+  
+  .lead-form input {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .lead-form button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+
+
+/* Form and Input Styling */
+/* Table Styling */
+.lead-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Table Header */
+.lead-table thead tr {
   background-color: #5e9bb5;
   color: white;
-  border: none;
-  padding: 10px 20px; /* Increased padding for width */
-  border-radius: 5px;
-  cursor: pointer;
-  font-family: "Arial", sans-serif;
-  min-width: 120px; /* Ensures a minimum button width */
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-family: "Arial", sans-serif;
-}
-
-th, td {
+.lead-table th, .lead-table td {
   border: 1px solid #ddd;
-  padding: 10px;
+  padding: 14px;
   text-align: left;
-  font-family: "Arial", sans-serif;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
 }
 
-th {
-  background-color: #6299b7;
+/* Table Alternating Row Colors */
+.lead-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.lead-table tr:hover {
+  background-color: #e6f7ff;
+  transition: 0.3s;
+}
+
+/* Rounded Corners for Table */
+.lead-table thead tr:first-child th:first-child {
+  border-top-left-radius: 12px;
+}
+.lead-table thead tr:first-child th:last-child {
+  border-top-right-radius: 12px;
+}
+.lead-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+.lead-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* Non-Contacted Lead Styling */
+.non-contacted-row {
+  background-color: #ffffff;
+}
+
+.non-contacted-text {
+  color: #333;
+  font-weight: bold;
+}
+
+/* Contacted Lead Styling */
+.contacted-row {
+  background-color: #f0f4f8; /* Light grayish-blue */
+}
+
+.contacted-text {
+  color: #6c757d; /* Muted gray for contacted leads */
+}
+
+/* Status Buttons */
+.status-button {
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.status-button:not(:disabled) {
+  background-color: #417690;
   color: white;
+  border: none;
+}
+
+.status-button:not(:disabled):hover {
+  background-color: #355e72;
+}
+
+.status-button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
 }

@@ -71,7 +71,7 @@ const AllLeads = () => {
       <h1>Sales CRM</h1>
 
       {/* Add Lead Form */}
-      <form
+      {/* <form
         onSubmit={(e) => {
           e.preventDefault(); // Prevent the default form submission behavior
           addLead();
@@ -102,11 +102,50 @@ const AllLeads = () => {
           required
         />
         <button type="submit">Add Lead</button>
-      </form>
+      </form> */}
+          <form
+          className="lead-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            addLead();
+          }}
+        >
+          <fieldset>
+            <legend>Add New Lead</legend>
 
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              type="text"
+              name="phoneNo"
+              placeholder="Phone Number"
+              value={formData.phoneNo}
+              onChange={handleChange}
+              required
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+
+            <button type="submit">Add Lead</button>
+          </fieldset>
+        </form>
       {/* Leads List */}
       <h2>Leads</h2>
-      <table>
+      {/* <table>
         <thead>
           <tr>
             <th>Name</th>
@@ -116,23 +155,62 @@ const AllLeads = () => {
           </tr>
         </thead>
         <tbody>
-          {leads.map((lead) => (
-            <tr key={lead._id}>
-              <td><strong>{lead.name}</strong></td>
-              <td>{lead.phoneNo}</td>
-              <td>{lead.email}</td>
-              <td>
-                <button
-                  disabled={lead.isContacted}
-                  onClick={() => markAsContacted(lead._id)}
-                >
-                  {lead.isContacted ? "Contacted" : "Mark as Contacted"}
-                </button>
-              </td>
-            </tr>
-          ))}
+          {leads
+            .sort((a, b) => a.isContacted === b.isContacted ? 0 : a.isContacted ? -1 : 1) // Sorting logic
+            .map((lead) => (
+              <tr key={lead._id}>
+                <td><strong>{lead.name}</strong></td>
+                <td>{lead.phoneNo}</td>
+                <td>{lead.email}</td>
+                <td>
+                  <button
+                    disabled={lead.isContacted}
+                    onClick={() => markAsContacted(lead._id)}
+                  >
+                    {lead.isContacted ? "Contacted" : "Mark as Contacted"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table> */}
+      <table className="lead-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {leads
+            .sort((a, b) => a.isContacted === b.isContacted ? 0 : a.isContacted ? -1 : 1) // Sorting logic
+            .map((lead) => (
+              <tr key={lead._id} className={lead.isContacted ? "contacted-row" : "non-contacted-row"}>
+                <td className={lead.isContacted ? "contacted-text" : "non-contacted-text"}>
+                  <strong>{lead.name}</strong>
+                </td>
+                <td className={lead.isContacted ? "contacted-text" : "non-contacted-text"}>
+                  {lead.phoneNo}
+                </td>
+                <td className={lead.isContacted ? "contacted-text" : "non-contacted-text"}>
+                  {lead.email}
+                </td>
+                <td>
+                  <button
+                    className="status-button"
+                    disabled={lead.isContacted}
+                    onClick={() => markAsContacted(lead._id)}
+                  >
+                    {lead.isContacted ? "Contacted" : "Mark as Contacted"}
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
+
 
     </div>
   );
