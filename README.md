@@ -32,6 +32,6 @@ npm install
 npm run dev
 
 ### API Endpoints
-Create Lead: POST /contacts
-Get Leads: GET /contacts
+Create Lead: POST /contacts ,
+Get Leads: GET /contacts ,
 Update Lead: PUT /contacts/:id
