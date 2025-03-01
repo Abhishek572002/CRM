@@ -1,21 +1,27 @@
 import { useState, useEffect, useCallback } from "react";
+import Table from "./Table";
+import { Form } from "./Form";
 // import axios from "axios";
 
 const API_URL = "http://localhost:5000/contacts";
 
 const AllLeads = () => {
   const [leads, setLeads] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phoneNo: "",
     email: "",
     isContacted: false,
   });
+  const [emailError, setEmailError] = useState("");
 
   // Fetch all leads
   useEffect(() => {
     const fetchLeads = async () => {
+
       try {
+
         const res = await fetch(API_URL, {
           method: "GET",
         });
@@ -35,13 +41,21 @@ const AllLeads = () => {
   }, []);
 
   // Handle input changes
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
+    if (e.target.name === 'email') {
+      setEmailError('');
+    }
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  }, [formData, setFormData, setEmailError]);
 
   // Add a new lead
   const addLead = useCallback(async () => {
+    if (leads.some((lead) => lead.email === formData.email)) {
+      setEmailError('This Email already exists');
+      return;
+    }
     try {
+      setLoading(true);
       const res = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -49,167 +63,50 @@ const AllLeads = () => {
         },
         body: JSON.stringify(formData),
       });
-      setLeads([...leads, { ...res }]);
+      const newLead = await res.json();
+      setLeads([...leads, { ...newLead }]);
       setFormData({ name: "", phoneNo: "", email: "" });
+      setLoading(false);
     } catch (error) {
       console.error("Error adding lead:", error);
     }
-  }, [formData, leads]);
+  }, [formData, leads, setLeads, setEmailError]);
 
   // Mark as contacted
-  const markAsContacted = async () => {
+  const markAsContacted = async (id, currentIsContacted) => {
     // try {
-    //   const res = await fetch.put(${API_URL}/${id});
-    //   setLeads(leads.map((lead) => (lead._id === id ? res.data : lead)));
-    // } catch (error) {
-    //   console.error("Error updating lead:", error);
-    // }
+    const res = await fetch(`${API_URL}/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isContacted: !currentIsContacted }),
+      }
+    );
+    if (res.ok) {
+      const updatedLeads = leads.map((lead) =>
+        lead._id === id ? { ...lead, isContacted: !currentIsContacted } : lead
+      );
+      setLeads([...updatedLeads]);
+    }
+
+
   };
 
   return (
     <div className="container">
       <h1>Sales CRM</h1>
-
-      {/* Add Lead Form */}
-      {/* <form
-        onSubmit={(e) => {
-          e.preventDefault(); // Prevent the default form submission behavior
-          addLead();
-        }}
-      >
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="phoneNo"
-          placeholder="Phone Number"
-          value={formData.phoneNo}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Add Lead</button>
-      </form> */}
-          <form
-          className="lead-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            addLead();
-          }}
-        >
-          <fieldset>
-            <legend>Add New Lead</legend>
-
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-
-            <input
-              type="text"
-              name="phoneNo"
-              placeholder="Phone Number"
-              value={formData.phoneNo}
-              onChange={handleChange}
-              required
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-
-            <button type="submit">Add Lead</button>
-          </fieldset>
-        </form>
-      {/* Leads List */}
+      <Form 
+        addLead={addLead} 
+        loading={loading} 
+        formData={formData} 
+        handleChange={handleChange} 
+        emailError={emailError} 
+      />
       <h2>Leads</h2>
-      {/* <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leads
-            .sort((a, b) => a.isContacted === b.isContacted ? 0 : a.isContacted ? -1 : 1) // Sorting logic
-            .map((lead) => (
-              <tr key={lead._id}>
-                <td><strong>{lead.name}</strong></td>
-                <td>{lead.phoneNo}</td>
-                <td>{lead.email}</td>
-                <td>
-                  <button
-                    disabled={lead.isContacted}
-                    onClick={() => markAsContacted(lead._id)}
-                  >
-                    {lead.isContacted ? "Contacted" : "Mark as Contacted"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table> */}
-      <table className="lead-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leads
-            .sort((a, b) => a.isContacted === b.isContacted ? 0 : a.isContacted ? -1 : 1) // Sorting logic
-            .map((lead) => (
-              <tr key={lead._id} className={lead.isContacted ? "contacted-row" : "non-contacted-row"}>
-                <td className={lead.isContacted ? "contacted-text" : "non-contacted-text"}>
-                  <strong>{lead.name}</strong>
-                </td>
-                <td className={lead.isContacted ? "contacted-text" : "non-contacted-text"}>
-                  {lead.phoneNo}
-                </td>
-                <td className={lead.isContacted ? "contacted-text" : "non-contacted-text"}>
-                  {lead.email}
-                </td>
-                <td>
-                  <button
-                    className="status-button"
-                    disabled={lead.isContacted}
-                    onClick={() => markAsContacted(lead._id)}
-                  >
-                    {lead.isContacted ? "Contacted" : "Mark as Contacted"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+     <Table leads={leads} markAsContacted={markAsContacted} />
+      
 
 
     </div>
