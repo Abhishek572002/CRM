@@ -66,3 +66,67 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* For the table form */
+.container {
+  max-width: 600px;
+  margin: auto;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: "Arial", sans-serif;
+}
+
+button {
+  background-color: #5e9bb5;
+  color: white;
+  border: none;
+  padding: 10px 20px; /* Increased padding for width */
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: "Arial", sans-serif;
+  min-width: 120px; /* Ensures a minimum button width */
+}
+
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  font-family: "Arial", sans-serif;
+}
+
+th {
+  background-color: #6299b7;
+  color: white;
+}
