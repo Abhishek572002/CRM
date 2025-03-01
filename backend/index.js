@@ -33,7 +33,7 @@ const contactSchema = new mongoose.Schema({
 
 const Contact = mongoose.model("Contact", contactSchema);
 
-// ✅ 1️⃣ POST - Save a Contact
+//  POST - Save a Contact
 app.post("/contacts", async (req, res) => {
   try {
     const { name, phoneNo, email, isContacted } = req.body;
@@ -45,7 +45,7 @@ app.post("/contacts", async (req, res) => {
   }
 });
 
-// ✅ 2️⃣ GET - Get All Contacts
+//  GET - Get All Contacts
 app.get("/contacts", async (req, res) => {
   try {
     const contacts = await Contact.find();
@@ -55,7 +55,7 @@ app.get("/contacts", async (req, res) => {
   }
 });
 
-// ✅ 3️⃣ PUT - Update isContacted Status by ID
+// PUT - Update isContacted Status by ID
 app.put("/contacts/:id", async (req, res) => {
   try {
     const { id } = req.params;
